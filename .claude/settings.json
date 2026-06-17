@@ -9,7 +9,19 @@
         "commit": "",
         "pr": ""
     },
-    "hooks": {},
+    "hooks": {
+        "PostToolUse": [
+            {
+                "matcher": "Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "bash $CLAUDE_PROJECT_DIR/.claude/hooks/format-java.sh"
+                    }
+                ]
+            }
+        ]
+    },
     "enableAllProjectMcpServers": true,
     "enabledMcpjsonServers": [
         "context7",
