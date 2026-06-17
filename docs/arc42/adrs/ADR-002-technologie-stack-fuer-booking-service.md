@@ -2,6 +2,13 @@
 
 **Status**: Akzeptiert
 
+> **Hinweis:** Der Authentifizierungs-Aspekt (Anforderung A3, Okta-Integration)
+> wird für die Prototyp-Phase durch
+> [ADR-004](ADR-004-authentifizierung-im-prototyp-basic-auth.md) aktualisiert:
+> Im Prototyp kommt passwortlose Basic-Auth zum Einsatz, die Okta-Integration
+> wird erst zum Produktivbetrieb nachgeliefert. Die übrige Stack-Entscheidung
+> (Spring Boot, H2, REST) bleibt unverändert.
+
 ## Kontext
 
 Die Buchungslogik von Calvin wird in einen eigenständigen **Booking Service**
@@ -20,7 +27,7 @@ Offen ist, welche Technologie dieser Service nutzen soll.
 | A5 | Technologie, in der das umsetzende Team **Erfahrung** hat (der Service wird selbst implementiert) |
 
 Zudem relevant: Der serverseitige Schutz vor Doppelbuchungen
-([QS-1](../qualitätsanforderungen.md#qs-1--zuverlässigkeit--verhinderung-von-doppelbuchungen))
+([QS-1](../../architektur/qualitätsanforderungen.md#qs-1--zuverlässigkeit--verhinderung-von-doppelbuchungen))
 verlangt verlässliche **Transaktionen**.
 
 ## Betrachtete Optionen

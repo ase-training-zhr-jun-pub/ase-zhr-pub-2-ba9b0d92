@@ -120,6 +120,13 @@ konkretisiert:
 > abzurufen. Der Booking Service weist 100 % dieser Anfragen ab – die Daten sind
 > nur für angemeldete INNOQ-Mitarbeiter zugänglich.
 
+> **Status im Prototyp:** Dieses Szenario ist noch **nicht erfüllt**. Der Prototyp
+> nutzt passwortlose Basic-Auth statt einer echten Authentifizierung (siehe
+> [ADR-004](../arc42/adrs/ADR-004-authentifizierung-im-prototyp-basic-auth.md)).
+> Die vollständige Umsetzung erfolgt mit der Okta-Integration zum Produktivbetrieb
+> – erfasst als technische Schuld
+> [TS-1](technische-schulden.md#ts-1--passwortlose-basic-auth-statt-okta).
+
 ---
 
 ## Priorisierung

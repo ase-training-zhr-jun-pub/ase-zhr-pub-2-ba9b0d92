@@ -64,6 +64,8 @@ GL --> Calvin : Sieht Reports
 
 Das Calvin-System besteht aus einer Single Page Application (SPA) und einem separaten Booking Service. Diese Architektur wurde für die Prototyping-Phase optimiert und ermöglicht eine klare Trennung zwischen Benutzeroberfläche und Geschäftslogik.
 
+Ein separater Ressource-Service ist für den Prototyp bewusst entfallen: Die Stammdaten (Standorte, Räume, Ausstattungen) liegen als **Mock-Daten in der SPA**, und der Booking Service arbeitet ausschließlich mit deren IDs (siehe [ADR-003](adrs/ADR-003-stammdaten-als-mock-daten-in-der-spa.md)). Die Authentifizierung erfolgt im Prototyp über **passwortlose Basic-Auth** (siehe [ADR-004](adrs/ADR-004-authentifizierung-im-prototyp-basic-auth.md)).
+
 ```plantuml
 @startuml
 !theme plain
@@ -80,7 +82,13 @@ package "Calvin System" {
 
 consultant --> spa : Bucht Räume &\nArbeitsplätze
 gl --> spa : Sieht Reports
-spa --> booking : REST API\n(JSON)
+spa --> booking : REST API (JSON)\nBasic-Auth (ohne Passwort)
+
+note right of spa
+  Stammdaten (Standorte,
+  Räume, Ausstattung)
+  als Mock-Daten
+end note
 
 @enduml
 ```
@@ -89,8 +97,8 @@ spa --> booking : REST API\n(JSON)
 
 | Baustein | Verantwortlichkeit | Quellcode |
 |----------|-------------------|-----------|
-| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports | `frontend/` |
-| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung, Auswertungsdaten | `backend/` |
+| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports; hält zugleich die **Stammdaten** (Standorte, Räume, Ausstattungen) als Mock-Daten | `frontend/` |
+| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung, Auswertungsdaten; arbeitet ausschließlich mit den **IDs** aus den Mock-Daten der SPA | `backend/` |
 
 ### Schnittstelle: SPA → Booking Service
 
@@ -100,7 +108,12 @@ Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTT
 
 ## Architekturentscheidungen
 
-Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert. Die ADRs findest du unter `docs/arc42/adrs/`.
+Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert. Die ADRs findest du unter `docs/arc42/adrs/`:
+
+- [ADR-001: Frontend-Prototyp mit separatem Booking Service](adrs/ADR-001-frontend-prototyp-und-booking-service.md)
+- [ADR-002: Technologie-Stack für den Booking Service](adrs/ADR-002-technologie-stack-fuer-booking-service.md)
+- [ADR-003: Stammdaten als Mock-Daten in der SPA](adrs/ADR-003-stammdaten-als-mock-daten-in-der-spa.md)
+- [ADR-004: Authentifizierung im Prototyp – passwortlose Basic-Auth statt Okta](adrs/ADR-004-authentifizierung-im-prototyp-basic-auth.md)
 
 ---
 
