@@ -77,11 +77,12 @@ Konkreter Stack:
 
 | Aspekt | Wahl |
 |--------|------|
-| Sprache / Framework | Java 21 (LTS) · Spring Boot 3 |
+| Sprache / Framework | Java 21 (LTS) · Spring Boot 4.1 |
 | REST-API | Spring Web (`spring-boot-starter-web`) |
 | Persistenz | Spring Data JPA mit **H2** im Datei-Modus (SQLite als Alternative möglich) |
 | Authentifizierung | Spring Security als OAuth2 Resource Server (OIDC/JWT-Validierung gegen Okta) |
 | Build / Tests | Maven · JUnit 5 |
+| Port | 8081 (Port 8080 in Crucible durch VS-Code-Server belegt) |
 
 > Kotlin bleibt eine kompatible Alternative zu Java und kann ohne Änderung der
 > übrigen Entscheidung gewählt werden.

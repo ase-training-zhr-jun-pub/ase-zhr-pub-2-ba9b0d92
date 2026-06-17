@@ -41,21 +41,23 @@ npx shadcn@latest add <name> --overwrite  # ShadCN-Komponente hinzufügen
 - Routing via HashRouter (proxy-kompatibel), Routen in `frontend/src/App.tsx`
 - Styling: Tailwind-Klassen + `cn()` aus `@/lib/utils`
 
-## Backend (`backend/`) – noch nicht angelegt
+## Backend (`backend/`)
 
-**Stack (ADR-002):** Java 21 · Spring Boot 3 · Spring Web (REST) · Spring Data JPA · H2 (Datei-Modus) · Maven
+**Stack (ADR-002):** Java 21 · Spring Boot 4.1 · Spring Web (REST) · Maven  
+Läuft auf **Port 8081** (8080 ist in der Crucible-Umgebung durch den VS-Code-Server belegt).
 
 ```bash
 # SDK installieren (einmalig nach Codespace-Neustart):
 bash scripts/install-sdk.sh
 
-# Sobald backend/ existiert:
 cd backend
-./mvnw spring-boot:run   # Dev-Server starten
-./mvnw test              # Alle Tests
-./mvnw test -Dtest=KlassenName  # Einzelner Test
-./mvnw verify            # Build + Tests
+./mvnw spring-boot:run              # Dev-Server starten
+./mvnw test                         # Alle Tests
+./mvnw test -Dtest=KlassenName      # Einzelner Test
+./mvnw verify                       # Build + Tests
 ```
+
+**Frontend→Backend URL:** `frontend/src/lib/api.ts` leitet `apiBaseUrl()` aus `window.location` ab — kein Hard-coding nötig. Funktioniert in Crucible (`…/proxy/8081/`), Codespaces und lokal.
 
 **Auth (ADR-004):** Im Prototyp passwortlose Basic-Auth (kein Passwort-Check). Okta/OIDC folgt beim Produktivbetrieb – siehe technische Schulden TS-1.
 
