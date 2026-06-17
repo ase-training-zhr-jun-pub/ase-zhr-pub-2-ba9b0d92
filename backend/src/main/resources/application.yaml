@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: booking-service
+
+server:
+  # Port 8080 ist in der Crucible-Umgebung vom VS-Code-Server belegt.
+  port: 8081

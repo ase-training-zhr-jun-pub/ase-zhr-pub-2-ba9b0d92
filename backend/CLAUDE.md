@@ -64,7 +64,7 @@ Angestrebte **Layered Architecture** (3 Schichten):
 
 | Datei | Zweck |
 |---|---|
-| `src/main/resources/application.properties` | Port (8081), Datenbank-Config, App-Name |
+| `src/main/resources/application.yaml` | Port (8081), Datenbank-Config, App-Name |
 | `src/main/java/.../config/WebConfig.java` | CORS-Konfiguration (`/api/**`) |
 | `src/main/java/.../web/HelloController.java` | Verbindungstest-Endpunkt `GET /api/hello` |
 | `pom.xml` | Dependencies, Spring Boot Parent (4.1.0), Java 21 |
