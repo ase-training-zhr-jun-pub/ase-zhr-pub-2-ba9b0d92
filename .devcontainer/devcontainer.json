@@ -15,7 +15,13 @@
 				"esbenp.prettier-vscode",
 				"DavidAnson.vscode-markdownlint",
 				"bierner.markdown-mermaid",
-				"pomdtr.markdown-kroki"
+				"pomdtr.markdown-kroki",
+				// Java / Spring Boot
+				"vscjava.vscode-java-pack",
+				"vmware.vscode-spring-boot",
+				"vscjava.vscode-spring-initializr",
+				"vscjava.vscode-spring-boot-dashboard",
+				"vscjava.vscode-gradle"
 			]
 		}
 	},
@@ -32,5 +38,6 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// "containerEnv": {},
-	"postStartCommand": "sudo /usr/local/share/docker-init.sh"
+	"postStartCommand": "sudo /usr/local/share/docker-init.sh",
+	"onCreateCommand": "bash scripts/install-sdk.sh"
 }
