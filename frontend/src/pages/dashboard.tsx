@@ -13,6 +13,7 @@ import { toast } from "sonner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BuchungDialog } from "@/components/buchung-dialog"
+import { BackendStatus } from "@/components/backend-status"
 import { useApp } from "@/lib/store"
 import {
   AKTUELLER_NUTZER,
@@ -86,6 +87,8 @@ export function DashboardPage() {
           Hier ist dein Überblick für {standortName(standortId)}.
         </p>
       </div>
+
+      <BackendStatus />
 
       <div className="grid gap-4 md:grid-cols-3">
         {/* Nächste Buchung */}
