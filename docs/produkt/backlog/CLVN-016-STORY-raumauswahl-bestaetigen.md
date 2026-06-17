@@ -33,3 +33,22 @@ Diese User Story ist zentral für das Epic "Raum buchen", da sie den Übergang v
 ## Zugehöriges Epic
 
 [CLVN-015 - Raum buchen](/docs/produkt/backlog/CLVN-015-EPIC-raum-buchen.md)
+
+## Planung
+
+Die Story wird als Full-Stack-Feature umgesetzt und bildet zugleich die Backend-Foundation für das Epic „Raum buchen":
+
+- **Frontend:** Vorgelagerter modaler Bestätigungsschritt zwischen Raumsuche und Buchungsformular. Der ausgewählte Konferenzraum wird hervorgehoben, Raumdetails und gewählter Zeitraum werden angezeigt; „Weiter zur Buchung" führt zur Eingabe der Buchungsdetails.
+- **Backend:** Erstmalige Persistenzschicht (JPA + H2), `Buchung`-Domain-Model mit Status `ENTWURF`, ein Endpoint zur Verfügbarkeitsprüfung (Schutz gegen Doppelbuchung) sowie ein Endpoint zum Anlegen eines Buchungs-Entwurfs.
+
+Reihenfolge der Subtasks: CLVN-028 → CLVN-029 → {CLVN-030, CLVN-031} → CLVN-032 → CLVN-033 → CLVN-034.
+
+## Subtasks
+
+- [CLVN-028-SUBTASK-persistenz-jpa-h2](./CLVN-028-SUBTASK-persistenz-jpa-h2.md)
+- [CLVN-029-SUBTASK-buchung-domain-model](./CLVN-029-SUBTASK-buchung-domain-model.md)
+- [CLVN-030-SUBTASK-verfuegbarkeitspruefung-endpoint](./CLVN-030-SUBTASK-verfuegbarkeitspruefung-endpoint.md)
+- [CLVN-031-SUBTASK-buchungs-entwurf-endpoint](./CLVN-031-SUBTASK-buchungs-entwurf-endpoint.md)
+- [CLVN-032-SUBTASK-frontend-api-anbindung](./CLVN-032-SUBTASK-frontend-api-anbindung.md)
+- [CLVN-033-SUBTASK-raumauswahl-bestaetigungsdialog](./CLVN-033-SUBTASK-raumauswahl-bestaetigungsdialog.md)
+- [CLVN-034-SUBTASK-flow-integration-buchenpage](./CLVN-034-SUBTASK-flow-integration-buchenpage.md)
