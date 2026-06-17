@@ -17,45 +17,57 @@ Bei Unklarheiten immer zuerst `docs/` lesen – insbesondere:
 - `docs/arc42/adrs/` – Architekturentscheidungen (ADR-001 bis ADR-004)
 - `docs/architektur/technische-schulden.md` – bewusst eingegangene Vereinfachungen
 
-## Frontend (`frontend/`)
+## Anwendung starten
 
-**Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · ShadCN UI (base-nova)
+### Frontend (`frontend/`, Port 5173)
 
 ```bash
 cd frontend
-npm run dev        # Dev-Server auf :5173 (hot reload, nur lokal)
-npm run build      # Production-Build (notwendig für Proxy-Betrieb)
-npm run preview    # Production-Build hinter Proxy ausliefern (Port 5173)
-npm run lint       # ESLint
-npx shadcn@latest add <name> --overwrite  # ShadCN-Komponente hinzufügen
+npm run build && npm run preview   # Proxy-Betrieb (Crucible) – immer so starten
+npm run dev                        # nur lokal ohne Proxy (hot reload)
+npm run lint
+npx shadcn@latest add <name> --overwrite
 ```
 
-**Wichtig – Proxy-Betrieb (Crucible):** Der Dev-Server (`npm run dev`) funktioniert hinter dem Crucible-Proxy **nicht** (absolute Asset-Pfade). Für den Proxy-Betrieb immer `npm run build && npm run preview` verwenden. Port-URL aus `$VSCODE_PROXY_URI` ableiten.
+**Wichtig – Proxy-Betrieb (Crucible):** `npm run dev` liefert hinter dem Proxy eine leere Seite (absolute Asset-Pfade). **Immer** `npm run build && npm run preview` verwenden.
 
-**Konventionen:**
+**Frontend-URL (Crucible):**
+```bash
+echo "${VSCODE_PROXY_URI/\{\{port\}\}/5173}"
+```
+
+### Backend (`backend/`, Port 8081)
+
+```bash
+bash scripts/install-sdk.sh   # einmalig nach Codespace-Neustart (Java/Maven via SDKMAN)
+
+cd backend
+./mvnw spring-boot:run        # starten
+./mvnw test                   # alle Tests
+./mvnw test -Dtest=KlassenName  # einzelner Test
+./mvnw verify                 # Build + Tests
+```
+
+**Backend-URL (Crucible):**
+```bash
+echo "${VSCODE_PROXY_URI/\{\{port\}\}/8081}"
+# → z. B. https://crucible.ch.innoq.io/t/.../s/.../proxy/8081/
+# REST-Endpunkt: <backend-url>/api/hello
+```
+
+**Stack (ADR-002):** Java 21 · Spring Boot 4.1 · Spring Web (REST) · Maven · Port 8081 (Port 8080 in Crucible durch VS-Code-Server belegt)
+
+## Frontend-Konventionen
+
 - Import-Alias `@/` → `frontend/src/`
 - Eigene Komponenten: `frontend/src/components/` · ShadCN-Komponenten: `frontend/src/components/ui/`
 - Seiten: `frontend/src/pages/`
-- Zentrale Mock-Daten (kein Backend): `frontend/src/lib/mock-data.ts`
+- Zentrale Mock-Daten: `frontend/src/lib/mock-data.ts`
 - App-State (Buchungen, Favoriten, Standort): `frontend/src/lib/store.tsx`
 - Routing via HashRouter (proxy-kompatibel), Routen in `frontend/src/App.tsx`
 - Styling: Tailwind-Klassen + `cn()` aus `@/lib/utils`
 
-## Backend (`backend/`)
-
-**Stack (ADR-002):** Java 21 · Spring Boot 4.1 · Spring Web (REST) · Maven  
-Läuft auf **Port 8081** (8080 ist in der Crucible-Umgebung durch den VS-Code-Server belegt).
-
-```bash
-# SDK installieren (einmalig nach Codespace-Neustart):
-bash scripts/install-sdk.sh
-
-cd backend
-./mvnw spring-boot:run              # Dev-Server starten
-./mvnw test                         # Alle Tests
-./mvnw test -Dtest=KlassenName      # Einzelner Test
-./mvnw verify                       # Build + Tests
-```
+## Backend-Konventionen
 
 **Frontend→Backend URL:** `frontend/src/lib/api.ts` leitet `apiBaseUrl()` aus `window.location` ab — kein Hard-coding nötig. Funktioniert in Crucible (`…/proxy/8081/`), Codespaces und lokal.
 
