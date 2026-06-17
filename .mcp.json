@@ -12,7 +12,7 @@
         "--no-sandbox",
         "--isolated",
         "--executable-path",
-        "/opt/playwright-browsers/chromium-1208/chrome-linux64/chrome"
+        "/home/coder/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome"
       ],
       "env": {}
     }

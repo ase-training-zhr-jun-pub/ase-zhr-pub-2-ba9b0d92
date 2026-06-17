@@ -92,4 +92,4 @@ Ticket-Nummern folgen dem Schema `CLVN-XXX`. Die nächste freie Nummer ermittelt
 ## MCP-Server
 
 - **context7** – aktuelle Bibliotheks-Doku abrufen (bei unbekannten APIs immer zuerst nutzen)
-- **playwright** – Browser-Automatisierung zur visuellen Verifikation von Frontend-Änderungen (Chromium unter `/opt/playwright-browsers/`)
+- **playwright** – Browser-Automatisierung zur visuellen Verifikation von Frontend-Änderungen (Chromium unter `~/.cache/ms-playwright/`)
