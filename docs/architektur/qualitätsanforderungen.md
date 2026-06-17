@@ -26,8 +26,8 @@ Jedes Szenario folgt dem Template:
 Die Szenarien wurden auf Basis eines Interviews mit den folgenden Annahmen
 konkretisiert:
 
-- **Spitzenlast:** bis zu **300 gleichzeitige Nutzer** (z. B. morgendliche Stoßzeit
-  beim Buchen des Bürotags).
+- **Spitzenlast:** bis zu **150 gleichzeitige Nutzer** (konsistent mit den
+  Qualitätszielen in arc42; z. B. morgendliche Stoßzeit beim Buchen des Bürotags).
 - **Datenschutz:** Buchungs- und Anwesenheitsdaten („wer ist wann im Büro") sind
   **nur für angemeldete INNOQ-Mitarbeiter** sichtbar – Authentifizierung ist
   erforderlich.
@@ -58,14 +58,14 @@ konkretisiert:
 
 | Feld | Wert |
 |------|------|
-| **Environment** | Spitzenlast (morgendliche Stoßzeit) mit bis zu **300 gleichzeitigen Nutzern** |
+| **Environment** | Spitzenlast (morgendliche Stoßzeit) mit bis zu **150 gleichzeitigen Nutzern** |
 | **Source** | Ein INNOQ-Mitarbeiter |
 | **Event** | ruft die verfügbaren Konferenzräume eines Standorts für ein gewähltes Zeitfenster ab (Raumsuche) |
 | **Artifact** | Calvin (Frontend + Booking Service über REST API) |
 | **Response** | Die Liste der verfügbaren Räume wird vollständig und korrekt angezeigt |
-| **Measure** | In **≤ 500 ms** für **95 %** der Anfragen, auch bei 300 gleichzeitigen Nutzern |
+| **Measure** | In **≤ 500 ms** für **95 %** der Anfragen, auch bei 150 gleichzeitigen Nutzern |
 
-> Während der morgendlichen Stoßzeit mit 300 gleichzeitigen Nutzern ruft ein
+> Während der morgendlichen Stoßzeit mit 150 gleichzeitigen Nutzern ruft ein
 > INNOQ-Mitarbeiter die verfügbaren Konferenzräume eines Standorts ab. Die
 > Ergebnisliste wird in 95 % der Anfragen in höchstens 500 ms angezeigt.
 
