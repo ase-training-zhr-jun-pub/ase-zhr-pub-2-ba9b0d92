@@ -1,12 +1,12 @@
-# ADR-001: Technologie-Stack für den Booking Service
+# ADR-002: Technologie-Stack für den Booking Service
 
 **Status**: Akzeptiert
 
 ## Kontext
 
 Die Buchungslogik von Calvin wird in einen eigenständigen **Booking Service**
-ausgelagert (siehe [ADR Frontend-Prototyp mit separatem Booking
-Service](../../arc42/adrs/ADR-001-frontend-prototyp-und-booking-service.md)).
+ausgelagert (siehe [ADR-001 Frontend-Prototyp mit separatem Booking
+Service](ADR-001-frontend-prototyp-und-booking-service.md)).
 Offen ist, welche Technologie dieser Service nutzen soll.
 
 ### Anforderungen an die Technologie
