@@ -1,6 +1,24 @@
 spring:
   application:
     name: booking-service
+  datasource:
+    # H2 im Datei-Modus: Buchungen überleben Neustarts.
+    # AUTO_SERVER=TRUE erlaubt parallelen Zugriff (App + H2-Konsole/Tool).
+    url: jdbc:h2:file:./data/calvin-booking;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      # Prototyp: Schema automatisch aus den Entities ableiten (kein Flyway).
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  h2:
+    console:
+      # Dev-Hilfe: H2-Konsole unter /h2-console erreichbar.
+      enabled: true
 
 server:
   # Port 8080 ist in der Crucible-Umgebung vom VS-Code-Server belegt.
