@@ -2,6 +2,7 @@
 name: subtasks
 description: Plant eine User Story gemeinsam mit dem Nutzer und erstellt Subtask-Tickets. Interaktiver, kollaborativer Prozess mit mehreren Phasen.
 argument-hint: "[@docs/produkt/backlog/CLVN-008-STORY-verfuegbarkeit-pruefen.md]"
+model: claude-opus-4-8
 disable-model-invocation: true
 allowed-tools: Bash(`cat .claude/skills/subtasks/templates/subtask.md`)
 ---

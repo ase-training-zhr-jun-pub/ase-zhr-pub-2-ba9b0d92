@@ -2,6 +2,7 @@
 name: pr
 description: Erstellt einen Pull Request.
 argument-hint: "[optionaler PR-Titel]"
+model: claude-haiku-4-5-20251001
 allowed-tools: Bash(git remote get-url origin), Bash(git branch --show-current), Bash(git status --short), Bash(git log --oneline main..HEAD)
 ---
 

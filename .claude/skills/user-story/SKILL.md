@@ -2,6 +2,7 @@
 name: user-story
 description: Erstellt die nächste User Story aus einem Epic für das Calvin Raumbuchungssystem. Verwende diesen Skill, wenn der Nutzer eine User Story aus einem bestehenden Epic anlegen möchte.
 argument-hint: "[@docs/../backlog/CLVN-XXX-EPIC-name.md]"
+model: claude-sonnet-4-6
 disable-model-invocation: true
 allowed-tools: Bash(./.claude/skills/user-story/scripts/get-next-ticket-number), Bash(cat .claude/skills/user-story/templates/user-story.md),Bash(cat .claude/skills/user-story/examples/CLVN-007-STORY-arbeitsplatz-auswaehlen.md)
 ---

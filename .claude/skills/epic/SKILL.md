@@ -2,6 +2,7 @@
 name: epic
 description: Erstellt ein neues Epic für das Calvin Raumbuchungssystem für ein Backbone Item aus der User Story Map "Raumbuchung".
 argument-hint: "[Backbone Item]"
+model: claude-sonnet-4-6
 disable-model-invocation: true
 allowed-tools: Bash(./.claude/skills/epic/scripts/get-next-ticket-number), Bash(cat .claude/skills/epic/templates/epic.md), Bash(cat .claude/skills/epic/examples/CLVN-006-EPIC-arbeitsplatz-buchen.md)
 ---

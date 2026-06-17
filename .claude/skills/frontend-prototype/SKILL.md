@@ -2,6 +2,7 @@
 name: frontend-prototype
 description: Frontend-Prototyp für Calvin entwickeln. Nutze diesen Skill beim Prototyping der UI mit React, Tailwind und ShadCN.
 argument-hint: "[Feature-Beschreibung oder User Story]"
+model: claude-opus-4-8
 ---
 
 <role>
