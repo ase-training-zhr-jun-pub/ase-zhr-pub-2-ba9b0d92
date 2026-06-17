@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Installiert das Java-SDK und Maven für den Calvin Booking Service.
-# Technologie-Entscheidung: Java 21 (LTS) + Spring Boot 3 (ADR-002).
+# Installiert das Java-SDK und Maven für den Calvin Booking Service
+# sowie google-java-format für den Claude-Code-Formatierungs-Hook.
+# Technologie-Entscheidung: Java 21 (LTS) + Spring Boot 4.1 (ADR-002).
 #
 # Wird automatisch beim Erstellen des Codespace ausgeführt (onCreateCommand
 # in devcontainer.json). Nach manuellem Codespace-Neustart hier nochmal
@@ -10,8 +11,10 @@ set -eo pipefail   # kein -u, da SDKMAN ungebundene Variablen verwendet
 
 JAVA_VERSION="21.0.7-tem"
 MAVEN_VERSION="3.9.9"
+GJF_VERSION="1.25.2"
+GJF_JAR="$HOME/.local/lib/google-java-format.jar"
 
-echo "=== Calvin SDK Setup: Java ${JAVA_VERSION} + Maven ${MAVEN_VERSION} ==="
+echo "=== Calvin SDK Setup: Java ${JAVA_VERSION} + Maven ${MAVEN_VERSION} + google-java-format ${GJF_VERSION} ==="
 
 # --- Abhängigkeiten sicherstellen ---
 if ! command -v unzip &>/dev/null || ! command -v zip &>/dev/null; then
@@ -49,10 +52,23 @@ else
   sdk default maven "${MAVEN_VERSION}"
 fi
 
+# --- google-java-format (für Claude-Code-Formatierungs-Hook) ---
+mkdir -p "$HOME/.local/lib"
+if [ -f "$GJF_JAR" ]; then
+  echo "→ google-java-format ${GJF_VERSION} bereits installiert."
+else
+  echo "→ Installiere google-java-format ${GJF_VERSION}..."
+  curl -sL \
+    "https://github.com/google/google-java-format/releases/download/v${GJF_VERSION}/google-java-format-${GJF_VERSION}-all-deps.jar" \
+    -o "$GJF_JAR"
+  echo "→ Gespeichert unter ${GJF_JAR}"
+fi
+
 echo ""
 echo "=== Installation abgeschlossen ==="
 java -version
 mvn -version
+java -jar "$GJF_JAR" --version 2>&1
 echo ""
 echo "Hinweis: Starte eine neue Shell (oder 'source ~/.bashrc') um JAVA_HOME"
 echo "und PATH in anderen Terminals zu aktivieren."
