@@ -19,6 +19,9 @@ build/
 *.sqlite
 *.sqlite3
 
+# H2 (Booking Service, Datei-Modus)
+backend/data/
+
 # Environment
 .env
 .env.local
