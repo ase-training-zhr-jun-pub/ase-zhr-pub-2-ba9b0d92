@@ -7,6 +7,7 @@ import { BuchenPage } from "@/pages/buchen"
 import { RaeumePage } from "@/pages/raeume"
 import { MeineBuchungenPage } from "@/pages/meine-buchungen"
 import { ImBueroPage } from "@/pages/im-buero"
+import { BuchungBestaetigungPage } from "@/pages/buchung-bestaetigung"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/raeume" element={<RaeumePage />} />
           <Route path="/buchungen" element={<MeineBuchungenPage />} />
           <Route path="/im-buero" element={<ImBueroPage />} />
+          <Route path="/buchung-bestaetigung" element={<BuchungBestaetigungPage />} />
         </Route>
       </Routes>
       <Toaster position="top-right" richColors />
