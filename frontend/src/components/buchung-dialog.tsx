@@ -166,7 +166,7 @@ function BuchungForm({
         </Button>
         <Button onClick={buchen} disabled={!kannBuchen}>
           <CalendarCheck />
-          Buchung bestätigen
+          Buchung absenden
         </Button>
       </DialogFooter>
     </>
