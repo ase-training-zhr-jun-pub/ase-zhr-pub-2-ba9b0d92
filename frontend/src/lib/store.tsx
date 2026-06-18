@@ -15,6 +15,7 @@ interface AppState {
   addBuchung: (b: Omit<Buchung, "id">) => Buchung
   removeBuchung: (id: string) => void
   updateBuchung: (id: string, patch: Partial<Buchung>) => void
+  letzteBuchung: Buchung | null
 
   // Favoriten-Räume
   favoriten: string[]
@@ -42,6 +43,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     "koeln-rheinblick",
     "berlin-spree",
   ])
+  const [letzteBuchung, setLetzteBuchung] = useState<Buchung | null>(null)
 
   const value = useMemo<AppState>(() => {
     const belegungenFuer = (raumId: string, datum: string) =>
@@ -56,8 +58,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       addBuchung: (b) => {
         const neu: Buchung = { ...b, id: `b${++idZaehler}` }
         setBuchungen((prev) => [...prev, neu])
+        setLetzteBuchung(neu)
         return neu
       },
+      letzteBuchung,
       removeBuchung: (id) =>
         setBuchungen((prev) => prev.filter((b) => b.id !== id)),
       updateBuchung: (id, patch) =>

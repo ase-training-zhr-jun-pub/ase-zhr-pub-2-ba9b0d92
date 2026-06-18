@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-010
 Type: Story
 Epic: CLVN-007
-Status: TODO
+Status: DONE
 ---
 # Verfügbarkeit prüfen
 
@@ -18,12 +18,12 @@ Die Verfügbarkeitsprüfung gibt dem Mitarbeiter eindeutiges Feedback, ob der ge
 
 ## Akzeptanzkriterien
 
-- [ ] Die Verfügbarkeit eines Konferenzraums kann für einen gewählten Zeitraum geprüft werden
-- [ ] Ein freier Raum wird eindeutig als "verfügbar" gekennzeichnet
-- [ ] Ein belegter Raum wird eindeutig als "nicht verfügbar" gekennzeichnet
-- [ ] Die Prüfung berücksichtigt bereits bestehende Buchungen für den Raum
-- [ ] Das Ergebnis der Verfügbarkeitsprüfung wird dem Mitarbeiter sofort angezeigt
-- [ ] Bei Verfügbarkeit kann der Mitarbeiter direkt zur Buchung fortfahren
+- [x] Die Verfügbarkeit eines Konferenzraums kann für einen gewählten Zeitraum geprüft werden
+- [x] Ein freier Raum wird eindeutig als "verfügbar" gekennzeichnet
+- [x] Ein belegter Raum wird eindeutig als "nicht verfügbar" gekennzeichnet
+- [x] Die Prüfung berücksichtigt bereits bestehende Buchungen für den Raum
+- [x] Das Ergebnis der Verfügbarkeitsprüfung wird dem Mitarbeiter sofort angezeigt
+- [x] Bei Verfügbarkeit kann der Mitarbeiter direkt zur Buchung fortfahren
 
 ## Betroffene Persona
 

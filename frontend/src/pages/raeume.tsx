@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react"
-import { Star, Building2 } from "lucide-react"
+import { Star, Building2, CalendarSearch } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { RaumKarte } from "@/components/raum-karte"
 import { BuchungDialog } from "@/components/buchung-dialog"
 import { useApp } from "@/lib/store"
@@ -21,6 +23,16 @@ export function RaeumePage() {
   )
   const [dialogRaum, setDialogRaum] = useState<Raum | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+
+  const heute = new Date().toISOString().slice(0, 10)
+  const [datum, setDatum] = useState(heute)
+  const [von, setVon] = useState("09:00")
+  const [bis, setBis] = useState("10:00")
+  const [verfuegbarkeitAktiv, setVerfuegbarkeitAktiv] = useState(false)
+
+  const zeitOk = von < bis
+  const verfuegbarkeit =
+    verfuegbarkeitAktiv && zeitOk ? { datum, von, bis } : undefined
 
   const raeume = useMemo(() => {
     if (bereich === "alle") return RAEUME
@@ -58,6 +70,59 @@ export function RaeumePage() {
         </Tabs>
       </div>
 
+      {/* Verfügbarkeit prüfen */}
+      <Card>
+        <CardContent className="flex flex-wrap items-end gap-4 p-4">
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <CalendarSearch className="size-4" />
+            Verfügbarkeit prüfen
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="r-datum">Datum</Label>
+            <Input
+              id="r-datum"
+              type="date"
+              className="w-[170px]"
+              value={datum}
+              min={heute}
+              onChange={(e) => { setDatum(e.target.value); setVerfuegbarkeitAktiv(true) }}
+            />
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="r-von">Von</Label>
+            <Input
+              id="r-von"
+              type="time"
+              className="w-[120px]"
+              value={von}
+              onChange={(e) => { setVon(e.target.value); setVerfuegbarkeitAktiv(true) }}
+            />
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="r-bis">Bis</Label>
+            <Input
+              id="r-bis"
+              type="time"
+              className="w-[120px]"
+              value={bis}
+              onChange={(e) => { setBis(e.target.value); setVerfuegbarkeitAktiv(true) }}
+            />
+          </div>
+          <Button
+            variant={verfuegbarkeitAktiv ? "secondary" : "default"}
+            onClick={() => setVerfuegbarkeitAktiv((v) => !v)}
+          >
+            {verfuegbarkeitAktiv ? "Anzeige zurücksetzen" : "Verfügbarkeit anzeigen"}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {!zeitOk && verfuegbarkeitAktiv && (
+        <p className="text-sm text-destructive">
+          Die Endzeit muss nach der Startzeit liegen.
+        </p>
+      )}
+
       {raeume.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-3 py-12 text-center text-muted-foreground">
@@ -74,7 +139,12 @@ export function RaeumePage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {raeume.map((raum) => (
-            <RaumKarte key={raum.id} raum={raum} onBuchen={buchen} />
+            <RaumKarte
+              key={raum.id}
+              raum={raum}
+              verfuegbarkeit={verfuegbarkeit}
+              onBuchen={buchen}
+            />
           ))}
         </div>
       )}

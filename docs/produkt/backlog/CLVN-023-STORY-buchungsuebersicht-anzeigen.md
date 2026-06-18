@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-023
 Type: Story
 Epic: CLVN-021
-Status: TODO
+Status: DONE
 ---
 # Buchungsübersicht anzeigen
 
@@ -20,13 +20,13 @@ Diese User Story ist ein zentraler Bestandteil des Epics "Buchungen verwalten" u
 
 ## Akzeptanzkriterien
 
-- [ ] Alle Raumbuchungen des angemeldeten Mitarbeiters werden in einer Liste angezeigt
-- [ ] Jede Buchung zeigt mindestens: Datum, Uhrzeit (von/bis), Konferenzraum-Name und Standort
-- [ ] Die Buchungen sind chronologisch sortiert (nächste Buchung zuerst)
-- [ ] Vergangene Buchungen sind von zukünftigen Buchungen visuell unterscheidbar
-- [ ] Bei Klick auf eine Buchung gelangt der Mitarbeiter zur Detailansicht (CLVN-024)
-- [ ] Bei keinen vorhandenen Buchungen wird ein entsprechender Hinweis angezeigt
-- [ ] Die Übersicht ist von der Seite "Meine Buchungen" (CLVN-022) aus erreichbar
+- [x] Alle Raumbuchungen des angemeldeten Mitarbeiters werden in einer Liste angezeigt
+- [x] Jede Buchung zeigt mindestens: Datum, Uhrzeit (von/bis), Konferenzraum-Name und Standort
+- [x] Die Buchungen sind chronologisch sortiert (nächste Buchung zuerst)
+- [x] Vergangene Buchungen sind von zukünftigen Buchungen visuell unterscheidbar
+- [x] Bei Klick auf eine Buchung gelangt der Mitarbeiter zur Detailansicht (CLVN-024)
+- [x] Bei keinen vorhandenen Buchungen wird ein entsprechender Hinweis angezeigt
+- [x] Die Übersicht ist von der Seite "Meine Buchungen" (CLVN-022) aus erreichbar
 
 ## Betroffene Persona
 
