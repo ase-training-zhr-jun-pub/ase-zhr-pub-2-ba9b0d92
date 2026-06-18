@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-029
 Type: Subtask
 Story: CLVN-016
-Status: TODO
+Status: DONE
 ---
 
 # Buchung-Domain-Model und Repository

@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-032
 Type: Subtask
 Story: CLVN-016
-Status: TODO
+Status: DONE
 ---
 
 # Frontend-API-Anbindung an den Booking Service
