@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { CalendarCheck, TriangleAlert } from "lucide-react"
-import { toast } from "sonner"
 
 import {
   Dialog,
@@ -17,7 +16,6 @@ import { Label } from "@/components/ui/label"
 import { AusstattungListe } from "@/components/ausstattung-badge"
 import { useApp } from "@/lib/store"
 import { AKTUELLER_NUTZER, standortName, type Raum } from "@/lib/mock-data"
-import { formatDatum } from "@/lib/format"
 
 interface Props {
   raum: Raum | null
