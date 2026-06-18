@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-020
 Type: Story
 Epic: CLVN-015
-Status: TODO
+Status: DONE
 ---
 # Buchungsbestätigung erhalten
 
@@ -16,13 +16,13 @@ Nach dem erfolgreichen Absenden einer Raumbuchung benötigt der INNOQ-Mitarbeite
 
 ## Akzeptanzkriterien
 
-- [ ] Nach erfolgreicher Buchung wird eine Bestätigungsmeldung angezeigt
-- [ ] Die Bestätigung enthält den Namen des gebuchten Konferenzraums
-- [ ] Die Bestätigung enthält Datum und Zeitraum der Buchung
-- [ ] Die Bestätigung enthält den Standort des Raums
-- [ ] Die Bestätigung enthält den eingegebenen Meetingtitel (falls vorhanden)
-- [ ] Die Bestätigung enthält die Buchungsnotiz (falls vorhanden)
-- [ ] Der Mitarbeiter kann von der Bestätigung zur Buchungsübersicht navigieren
+- [x] Nach erfolgreicher Buchung wird eine Bestätigungsmeldung angezeigt
+- [x] Die Bestätigung enthält den Namen des gebuchten Konferenzraums
+- [x] Die Bestätigung enthält Datum und Zeitraum der Buchung
+- [x] Die Bestätigung enthält den Standort des Raums
+- [x] Die Bestätigung enthält den eingegebenen Meetingtitel (falls vorhanden)
+- [x] Die Bestätigung enthält die Buchungsnotiz (falls vorhanden)
+- [x] Der Mitarbeiter kann von der Bestätigung zur Buchungsübersicht navigieren
 
 ## Betroffene Persona
 

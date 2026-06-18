@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { CalendarCheck, TriangleAlert } from "lucide-react"
 import { toast } from "sonner"
 
@@ -54,6 +55,7 @@ function BuchungForm({
   onClose: () => void
 }) {
   const { addBuchung, istVerfuegbar } = useApp()
+  const navigate = useNavigate()
   const heute = new Date().toISOString().slice(0, 10)
   const [datum, setDatum] = useState(initial?.datum ?? heute)
   const [von, setVon] = useState(initial?.von ?? "09:00")
@@ -77,10 +79,8 @@ function BuchungForm({
       notiz: notiz.trim() || undefined,
       organisator: AKTUELLER_NUTZER.name,
     })
-    toast.success("Raumbuchung bestätigt", {
-      description: `${raum.name} · ${formatDatum(datum)} · ${von}–${bis} Uhr`,
-    })
     onClose()
+    navigate("/buchung-bestaetigung")
   }
 
   return (
