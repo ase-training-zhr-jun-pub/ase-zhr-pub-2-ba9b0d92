@@ -8,12 +8,14 @@ import {
   Share2,
   CalendarPlus,
   StickyNote,
+  ChevronRight,
 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
   DialogContent,
@@ -23,6 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { AusstattungListe } from "@/components/ausstattung-badge"
+import { cn } from "@/lib/utils"
 import { useApp } from "@/lib/store"
 import {
   AKTUELLER_NUTZER,
@@ -87,8 +90,22 @@ export function MeineBuchungenPage() {
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
         <TabsList>
-          <TabsTrigger value="kommend">Kommende</TabsTrigger>
-          <TabsTrigger value="vergangen">Vergangene</TabsTrigger>
+          <TabsTrigger value="kommend" className="gap-1.5">
+            Kommende
+            {eigene.filter((b) => !istVergangen(b.datum, heute)).length > 0 && (
+              <Badge variant="secondary" className="h-4.5 px-1.5 py-0 text-xs">
+                {eigene.filter((b) => !istVergangen(b.datum, heute)).length}
+              </Badge>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="vergangen" className="gap-1.5">
+            Vergangene
+            {eigene.filter((b) => istVergangen(b.datum, heute)).length > 0 && (
+              <Badge variant="secondary" className="h-4.5 px-1.5 py-0 text-xs">
+                {eigene.filter((b) => istVergangen(b.datum, heute)).length}
+              </Badge>
+            )}
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
@@ -112,17 +129,34 @@ export function MeineBuchungenPage() {
         <div className="flex flex-col gap-3">
           {gefiltert.map((b) => {
             const raum = raumById(b.raumId)
+            const vergangen = istVergangen(b.datum, heute)
             return (
-              <Card key={b.id}>
+              <Card
+                key={b.id}
+                className={cn(
+                  "cursor-pointer transition-colors hover:bg-muted/50",
+                  vergangen && "opacity-60",
+                )}
+                onClick={() => setDetail(b)}
+              >
                 <CardContent className="flex flex-wrap items-center gap-4 p-4">
-                  <div className="flex min-w-[64px] flex-col items-center rounded-lg bg-muted px-3 py-2">
+                  <div
+                    className={cn(
+                      "flex min-w-[64px] flex-col items-center rounded-lg px-3 py-2",
+                      vergangen ? "bg-muted/50" : "bg-muted",
+                    )}
+                  >
                     <span className="text-xs text-muted-foreground">
                       {relativesDatum(b.datum, heute)}
                     </span>
-                    <span className="text-sm font-semibold">{b.von}</span>
+                    <span className={cn("text-sm font-semibold", vergangen && "text-muted-foreground")}>
+                      {b.von}
+                    </span>
                   </div>
                   <div className="flex-1">
-                    <div className="font-medium">{b.titel}</div>
+                    <div className={cn("font-medium", vergangen && "text-muted-foreground")}>
+                      {b.titel}
+                    </div>
                     <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <MapPin className="size-3.5" />
@@ -134,15 +168,8 @@ export function MeineBuchungenPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex gap-1">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setDetail(b)}
-                    >
-                      Details
-                    </Button>
-                    {!istVergangen(b.datum, heute) && (
+                  <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                    {!vergangen && (
                       <Button
                         variant="ghost"
                         size="icon-sm"
@@ -152,6 +179,7 @@ export function MeineBuchungenPage() {
                         <Trash2 className="text-destructive" />
                       </Button>
                     )}
+                    <ChevronRight className="size-4 text-muted-foreground" />
                   </div>
                 </CardContent>
               </Card>
