@@ -90,4 +90,19 @@ class BuchungControllerTest {
         .perform(post("/api/buchungen").contentType(MediaType.APPLICATION_JSON).content(body))
         .andExpect(status().isBadRequest());
   }
+
+  @Test
+  void liefert400BeiLeeremRequestBody() throws Exception {
+    mockMvc
+        .perform(post("/api/buchungen").contentType(MediaType.APPLICATION_JSON).content("{}"))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void liefert400BeiUngueltigemJson() throws Exception {
+    mockMvc
+        .perform(
+            post("/api/buchungen").contentType(MediaType.APPLICATION_JSON).content("nicht-json"))
+        .andExpect(status().isBadRequest());
+  }
 }

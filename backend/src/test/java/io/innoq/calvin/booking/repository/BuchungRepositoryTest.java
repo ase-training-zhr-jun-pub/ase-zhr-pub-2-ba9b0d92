@@ -66,4 +66,56 @@ class BuchungRepositoryTest {
     assertThat(repository.findUeberlappende("koeln-dom", DATUM, von, bis)).isEmpty();
     assertThat(repository.findUeberlappende(RAUM, DATUM.plusDays(1), von, bis)).isEmpty();
   }
+
+  @Test
+  void findetIdentischeZeitfenster() {
+    // Bestehende Buchung 09:00–10:00
+    repository.save(
+        Buchung.entwurf(RAUM, STANDORT, DATUM, LocalTime.of(9, 0), LocalTime.of(10, 0)));
+
+    // Identisches Zeitfenster 09:00–10:00 überschneidet sich
+    List<Buchung> treffer =
+        repository.findUeberlappende(RAUM, DATUM, LocalTime.of(9, 0), LocalTime.of(10, 0));
+
+    assertThat(treffer).hasSize(1);
+  }
+
+  @Test
+  void findetLinksUeberlappung() {
+    // Bestehende Buchung 09:00–10:00
+    repository.save(
+        Buchung.entwurf(RAUM, STANDORT, DATUM, LocalTime.of(9, 0), LocalTime.of(10, 0)));
+
+    // Anfrage 08:30–09:30 überlappt links
+    List<Buchung> treffer =
+        repository.findUeberlappende(RAUM, DATUM, LocalTime.of(8, 30), LocalTime.of(9, 30));
+
+    assertThat(treffer).hasSize(1);
+  }
+
+  @Test
+  void findetUmschliessendeBuchung() {
+    // Bestehende Buchung 09:00–10:00
+    repository.save(
+        Buchung.entwurf(RAUM, STANDORT, DATUM, LocalTime.of(9, 0), LocalTime.of(10, 0)));
+
+    // Anfrage 08:00–11:00 umschließt die bestehende Buchung
+    List<Buchung> treffer =
+        repository.findUeberlappende(RAUM, DATUM, LocalTime.of(8, 0), LocalTime.of(11, 0));
+
+    assertThat(treffer).hasSize(1);
+  }
+
+  @Test
+  void findetEnthaltenesBuchung() {
+    // Bestehende Buchung 09:00–10:00
+    repository.save(
+        Buchung.entwurf(RAUM, STANDORT, DATUM, LocalTime.of(9, 0), LocalTime.of(10, 0)));
+
+    // Anfrage 09:15–09:45 liegt vollständig innerhalb der bestehenden Buchung
+    List<Buchung> treffer =
+        repository.findUeberlappende(RAUM, DATUM, LocalTime.of(9, 15), LocalTime.of(9, 45));
+
+    assertThat(treffer).hasSize(1);
+  }
 }
