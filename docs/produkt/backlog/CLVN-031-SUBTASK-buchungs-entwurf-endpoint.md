@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-031
 Type: Subtask
 Story: CLVN-016
-Status: TODO
+Status: DONE
 ---
 
 # Buchungs-Entwurf-Endpoint

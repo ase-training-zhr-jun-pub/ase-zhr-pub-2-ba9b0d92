@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-028
 Type: Subtask
 Story: CLVN-016
-Status: TODO
+Status: DONE
 ---
 
 # Persistenz-Foundation: JPA und H2 konfigurieren
