@@ -22,6 +22,18 @@
             }
         ]
     },
+    "permissions": {
+        "allow": [
+            "Bash(git *)",
+            "Bash(gh *)",
+            "Bash(find *)",
+            "Bash(ls *)",
+            "Bash(cat *)",
+            "Read",
+            "Edit",
+            "Write"
+        ]
+    },
     "enableAllProjectMcpServers": true,
     "enabledMcpjsonServers": [
         "context7",
