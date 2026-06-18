@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { SlidersHorizontal, Search } from "lucide-react"
+import { toast } from "sonner"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { RaumKarte } from "@/components/raum-karte"
 import { BuchungDialog } from "@/components/buchung-dialog"
+import { RaumauswahlBestaetigungDialog } from "@/components/raumauswahl-bestaetigung-dialog"
 import { useApp } from "@/lib/store"
 import {
   ALLE_AUSSTATTUNGEN,
@@ -19,6 +21,11 @@ import {
   type Raum,
 } from "@/lib/mock-data"
 import { formatDatum } from "@/lib/format"
+import {
+  pruefeVerfuegbarkeit,
+  erstelleBuchungsentwurf,
+  RaumBelegtError,
+} from "@/lib/api"
 
 export function BuchenPage() {
   const { standortId, istVerfuegbar } = useApp()
@@ -33,7 +40,9 @@ export function BuchenPage() {
   const [nurFreie, setNurFreie] = useState(true)
 
   const [dialogRaum, setDialogRaum] = useState<Raum | null>(null)
+  const [bestaetigungOpen, setBestaetigungOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [laedt, setLaedt] = useState(false)
 
   function toggleAusstattung(a: Ausstattung) {
     setAusstattungFilter((prev) =>
@@ -64,7 +73,40 @@ export function BuchenPage() {
 
   function buchen(raum: Raum) {
     setDialogRaum(raum)
-    setDialogOpen(true)
+    setBestaetigungOpen(true)
+  }
+
+  async function weiterZurBuchung() {
+    if (!dialogRaum) return
+    setLaedt(true)
+    try {
+      const verfuegbar = await pruefeVerfuegbarkeit(dialogRaum.id, datum, von, bis)
+      if (!verfuegbar) {
+        toast.error("Raum nicht verfügbar", {
+          description: `${dialogRaum.name} ist im gewählten Zeitfenster belegt.`,
+        })
+        return
+      }
+      await erstelleBuchungsentwurf({
+        raumId: dialogRaum.id,
+        standortId: dialogRaum.standortId,
+        datum,
+        von,
+        bis,
+      })
+      setBestaetigungOpen(false)
+      setDialogOpen(true)
+    } catch (err) {
+      if (err instanceof RaumBelegtError) {
+        toast.error("Raum belegt", { description: err.message })
+      } else {
+        toast.error("Fehler beim Prüfen", {
+          description: "Das Backend ist nicht erreichbar. Bitte versuche es später.",
+        })
+      }
+    } finally {
+      setLaedt(false)
+    }
   }
 
   return (
@@ -196,6 +238,17 @@ export function BuchenPage() {
           )}
         </div>
       </div>
+
+      <RaumauswahlBestaetigungDialog
+        raum={dialogRaum}
+        open={bestaetigungOpen}
+        onOpenChange={setBestaetigungOpen}
+        datum={datum}
+        von={von}
+        bis={bis}
+        laedt={laedt}
+        onWeiter={weiterZurBuchung}
+      />
 
       <BuchungDialog
         raum={dialogRaum}
