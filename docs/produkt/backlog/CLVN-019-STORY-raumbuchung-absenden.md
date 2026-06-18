@@ -2,7 +2,7 @@
 Ticket-ID: CLVN-019
 Type: Story
 Epic: CLVN-015
-Status: TODO
+Status: DONE
 ---
 # Raumbuchung absenden
 
@@ -18,13 +18,13 @@ Diese User Story ist ein zentraler Schritt im Buchungsprozess und stellt den Üb
 
 ## Akzeptanzkriterien
 
-- [ ] Ein Button "Buchung absenden" ist sichtbar und klickbar, wenn alle Pflichtfelder ausgefüllt sind
-- [ ] Die Raumbuchung wird nach dem Absenden im System gespeichert
-- [ ] Der Konferenzraum wird für den gewählten Zeitraum als belegt markiert
-- [ ] Eine Doppelbuchung für denselben Zeitraum wird verhindert
-- [ ] Bei erfolgreicher Buchung wird der Mitarbeiter zur Buchungsbestätigung weitergeleitet
-- [ ] Bei einem Fehler (z.B. Raum zwischenzeitlich gebucht) wird eine verständliche Fehlermeldung angezeigt
-- [ ] Der Button ist deaktiviert, solange Pflichtfelder nicht ausgefüllt sind
+- [x] Ein Button "Buchung absenden" ist sichtbar und klickbar, wenn alle Pflichtfelder ausgefüllt sind
+- [x] Die Raumbuchung wird nach dem Absenden im System gespeichert
+- [x] Der Konferenzraum wird für den gewählten Zeitraum als belegt markiert
+- [x] Eine Doppelbuchung für denselben Zeitraum wird verhindert
+- [x] Bei erfolgreicher Buchung wird der Mitarbeiter zur Buchungsbestätigung weitergeleitet
+- [x] Bei einem Fehler (z.B. Raum zwischenzeitlich gebucht) wird eine verständliche Fehlermeldung angezeigt
+- [x] Der Button ist deaktiviert, solange Pflichtfelder nicht ausgefüllt sind
 
 ## Betroffene Persona
 
