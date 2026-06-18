@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, Clock, MapPin, Users } from "lucide-react"
+import { ArrowRight, CalendarDays, Clock, Loader2, MapPin, Users } from "lucide-react"
 
 import {
   Dialog,
@@ -21,6 +21,7 @@ interface Props {
   von: string
   bis: string
   onWeiter: () => void
+  laedt?: boolean
 }
 
 export function RaumauswahlBestaetigungDialog({
@@ -31,6 +32,7 @@ export function RaumauswahlBestaetigungDialog({
   von,
   bis,
   onWeiter,
+  laedt = false,
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -86,9 +88,13 @@ export function RaumauswahlBestaetigungDialog({
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Auswahl ändern
               </Button>
-              <Button onClick={onWeiter}>
+              <Button onClick={onWeiter} disabled={laedt}>
+                {laedt ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <ArrowRight />
+                )}
                 Weiter zur Buchung
-                <ArrowRight />
               </Button>
             </DialogFooter>
           </>
