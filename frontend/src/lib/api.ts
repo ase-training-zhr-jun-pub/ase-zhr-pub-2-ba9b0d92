@@ -37,3 +37,75 @@ export async function fetchHello(): Promise<string> {
   }
   return res.text()
 }
+
+// --- Buchungen (Booking Service) -------------------------------------------
+
+export type BuchungStatus = "ENTWURF" | "BESTAETIGT"
+
+/** Eingabe für das Anlegen eines Buchungs-Entwurfs. */
+export interface BuchungEntwurfRequest {
+  raumId: string
+  standortId: string
+  datum: string // ISO YYYY-MM-DD
+  von: string // "HH:mm"
+  bis: string // "HH:mm"
+}
+
+/** Vom Backend zurückgelieferte Buchung. */
+export interface BuchungDto {
+  id: number
+  raumId: string
+  standortId: string
+  datum: string
+  von: string
+  bis: string
+  status: BuchungStatus
+}
+
+/** Wird geworfen, wenn der Raum im gewählten Zeitfenster belegt ist (HTTP 409). */
+export class RaumBelegtError extends Error {}
+
+/**
+ * Prüft beim Backend, ob ein Konferenzraum im gewünschten Zeitfenster frei ist.
+ * Ruft GET /api/raeume/{raumId}/verfuegbarkeit auf.
+ */
+export async function pruefeVerfuegbarkeit(
+  raumId: string,
+  datum: string,
+  von: string,
+  bis: string,
+): Promise<boolean> {
+  const params = new URLSearchParams({ datum, von, bis })
+  const res = await fetch(
+    `${apiBaseUrl()}/api/raeume/${encodeURIComponent(raumId)}/verfuegbarkeit?${params}`,
+  )
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`)
+  }
+  const data = (await res.json()) as { verfuegbar: boolean }
+  return data.verfuegbar
+}
+
+/**
+ * Legt einen Buchungs-Entwurf (Status ENTWURF) an. Ruft POST /api/buchungen auf.
+ *
+ * @throws RaumBelegtError wenn der Raum im Zeitfenster bereits belegt ist (HTTP 409)
+ */
+export async function erstelleBuchungsentwurf(
+  request: BuchungEntwurfRequest,
+): Promise<BuchungDto> {
+  const res = await fetch(`${apiBaseUrl()}/api/buchungen`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(request),
+  })
+  if (res.status === 409) {
+    throw new RaumBelegtError(
+      "Der Konferenzraum ist im gewählten Zeitfenster bereits belegt.",
+    )
+  }
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`)
+  }
+  return (await res.json()) as BuchungDto
+}
