@@ -1,0 +1,94 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+
+# Bei mehreren Pushes auf denselben Branch nur den jeweils letzten Lauf behalten.
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write # dorny/test-reporter legt einen Check-Run mit den Testergebnissen an
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Run tests
+        working-directory: backend
+        run: ./mvnw -B clean test
+
+      - name: Publish test report
+        uses: dorny/test-reporter@v1
+        if: always() # Report auch bei fehlgeschlagenen Tests veröffentlichen
+        with:
+          name: Backend Test Results
+          path: backend/target/surefire-reports/*.xml
+          reporter: java-junit
+
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+      packages: write # Push in die GitHub Container Registry (GHCR)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Nur auf main einloggen & pushen – PRs bauen das Image nur zur Validierung.
+      - name: Log in to GHCR
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/booking-service
+          tags: |
+            type=sha
+            type=ref,event=branch
+            type=ref,event=pr
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

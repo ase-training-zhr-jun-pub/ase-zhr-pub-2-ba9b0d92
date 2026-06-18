@@ -1,0 +1,14 @@
+# Build-Output und lokale Daten nicht in den Docker-Build-Kontext kopieren
+target/
+data/
+
+# Doku & Git
+*.md
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+.vscode/
+*.iml
